@@ -38,3 +38,4 @@ HTML reports appear in `newman` folder.
 - Create a Pipeline job pointing at these files.
 - Ensure **Global Tool Configuration > NodeJS** includes a tool named `nodejs`.
 - Build — reports will be archived as artifacts under `newman/*.html`.
+# 1234
