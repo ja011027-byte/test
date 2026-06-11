@@ -1,22 +1,19 @@
 pipeline {
-    agent any
-    stages {
-        // 1. 빌드 시작 전 기존 리포트 폴더를 깨끗하게 지우는 단계를 추가합니다.
-        stage('Clean Old Reports') {
-            steps {
-                bat 'rmdir /s /q newman 2>nul || exit 0'
-                bat 'rmdir /s /q Newman_20Reports 2>nul || exit 0'
-            }
-        }
-        
-        // 기존에 있던 다른 stage들 (예: Test, Run 등)은 이 아래에 그대로 둡니다.
-        stage('Run Tests') {
-            steps {
-                // ... 기존 코드 ...
-            }
-        }
+  agent any
+  tools { nodejs 'nodejs' }   // Manage Jenkins > Global Tool Configuration에서 등록한 이름
+
+  stages {
+    stage('Prepare') {
+      steps {
+        bat 'if not exist newman mkdir newman'
+      }
     }
-}
+
+    stage('Install Newman') {
+      steps {
+        bat 'npm install -g newman newman-reporter-htmlextra'
+      }
+    }
 
     stage('Run Postman Collections') {
       steps {
